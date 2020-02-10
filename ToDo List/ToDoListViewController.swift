@@ -35,6 +35,11 @@ class ToDoListViewController: UIViewController {
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
             toDoArray[selectedIndexPath.row] = source.toDoItem
             tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+        } else {
+            let newIndexPath = IndexPath(row: toDoArray.count, section: 0)
+            toDoArray.append(source.toDoItem)
+            tableView.insertRows(at: [newIndexPath], with: .bottom)
+            tableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
         }
     }
 
