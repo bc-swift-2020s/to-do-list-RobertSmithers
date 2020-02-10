@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct ToDoItem {
+struct ToDoItem: Codable {
     var date: Date
     var notes: String
     var name: String
+//    var image: UIImage
 }
