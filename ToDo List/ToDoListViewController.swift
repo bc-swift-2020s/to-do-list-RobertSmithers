@@ -20,7 +20,23 @@ class ToDoListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetail" {
+            let destination = segue.destination as! ToDoDetailTableViewController
+            let selectedIndexPath = tableView.indexPathForSelectedRow!
+            destination.toDoItem = toDoArray[selectedIndexPath.row]
+        }
+    }
 
+    @IBAction func unwindFromDetail(segue: UIStoryboardSegue) {
+        let source = segue.source as! ToDoDetailTableViewController
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            toDoArray[selectedIndexPath.row] = source.toDoItem
+            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+        }
+    }
 
 }
 
