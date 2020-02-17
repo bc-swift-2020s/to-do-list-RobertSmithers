@@ -13,5 +13,6 @@ struct ToDoItem: Codable {
     var notes: String
     var name: String
     var reminderSet: Bool
+    var notificationID: String?
 //    var image: UIImage
 }
