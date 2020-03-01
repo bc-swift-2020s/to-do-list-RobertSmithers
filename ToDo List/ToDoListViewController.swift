@@ -13,7 +13,7 @@ class ToDoListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
-    
+     
     var toDoItems: [ToDoItem] = []
     
     override func viewDidLoad() {
@@ -151,15 +151,25 @@ class ToDoListViewController: UIViewController {
     }
 }
 
-extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
+extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource, ListTableViewCellDelegate {
+    func checkBoxToggle(sender: ListTableViewCell) {
+        if let selectedIndexPath = tableView.indexPath(for: sender) {
+            toDoItems[selectedIndexPath.row].completed = !toDoItems[selectedIndexPath.row].completed
+            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+            saveData()
+        }
+    }
+    
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return toDoItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = toDoItems[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ListTableViewCell
+        cell.delegate = self
+        cell.nameLabel.text = toDoItems[indexPath.row].name
+        cell.checkBoxButton.isSelected = toDoItems[indexPath.row].completed
         return cell
     }
     

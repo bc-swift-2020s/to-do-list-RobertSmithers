@@ -14,5 +14,6 @@ struct ToDoItem: Codable {
     var name: String
     var reminderSet: Bool
     var notificationID: String?
+    var completed: Bool
 //    var image: UIImage
 }

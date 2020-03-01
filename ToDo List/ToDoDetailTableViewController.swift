@@ -34,7 +34,7 @@ class ToDoDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if toDoItem == nil {
-            toDoItem = ToDoItem(date: Date().addingTimeInterval(24 * 60 * 60), notes: "", name: "", reminderSet: false)
+            toDoItem = ToDoItem(date: Date().addingTimeInterval(24 * 60 * 60), notes: "", name: "", reminderSet: false, completed: false)
         }
         updateUserInterface()
     }
@@ -49,7 +49,7 @@ class ToDoDetailTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        toDoItem = ToDoItem(date: datePicker.date, notes: noteView.text, name: nameField.text!, reminderSet: reminderSwitch.isOn)
+        toDoItem = ToDoItem(date: datePicker.date, notes: noteView.text, name: nameField.text!, reminderSet: reminderSwitch.isOn, completed: toDoItem.completed)
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
