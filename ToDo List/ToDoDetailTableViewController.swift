@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 private let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
@@ -34,6 +35,10 @@ class ToDoDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // setup foreground notification
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
@@ -44,6 +49,11 @@ class ToDoDetailTableViewController: UITableViewController {
             nameField.becomeFirstResponder()
         }
         updateUserInterface()
+    }
+    
+    // Runs when you tab back into the app (becomes active)
+    @objc func appActiveNotification() {
+        updateReminderSwitch()
     }
     
     func updateUserInterface() {
